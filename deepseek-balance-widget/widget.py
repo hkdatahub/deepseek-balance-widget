@@ -3,7 +3,7 @@ from datetime import datetime
 
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel,
-    QGridLayout,
+    QGridLayout, QPushButton,
 )
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QMouseEvent, QColor, QPalette
@@ -41,6 +41,16 @@ class BalanceWidget(QWidget):
         title.setStyleSheet("color: #cdd6f4; font-size: 13px; font-weight: 600;")
         header.addWidget(title)
         header.addStretch()
+
+        close_btn = QPushButton("✕")
+        close_btn.setFixedSize(20, 20)
+        close_btn.setStyleSheet(
+            "QPushButton { color: #6c7086; background: transparent; border: none; font-size: 12px; }"
+            "QPushButton:hover { color: #f38ba8; }"
+        )
+        close_btn.clicked.connect(self.hide)
+        header.addWidget(close_btn)
+
         self._status_label = QLabel("OK")
         self._status_label.setStyleSheet("color: #a6e3a1; font-size: 11px;")
         header.addWidget(self._status_label)
