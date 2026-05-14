@@ -26,6 +26,30 @@ def test_balance_info_from_response():
     assert info.topped_up_balance == 100.00
 
 
+def test_balance_info_picks_nonzero_currency():
+    """When USD is 0 and CNY has balance, pick CNY."""
+    resp = {
+        "is_available": True,
+        "balance_infos": [
+            {
+                "currency": "USD",
+                "total_balance": "0.00",
+                "granted_balance": "0.00",
+                "topped_up_balance": "0.00"
+            },
+            {
+                "currency": "CNY",
+                "total_balance": "88.00",
+                "granted_balance": "5.00",
+                "topped_up_balance": "83.00"
+            }
+        ]
+    }
+    info = BalanceInfo.from_response(resp)
+    assert info.currency == "CNY"
+    assert info.total_balance == 88.00
+
+
 def test_balance_info_str_representation():
     info = BalanceInfo(True, "CNY", 88.00, 8.00, 80.00)
     s = str(info)

@@ -18,7 +18,9 @@ class BalanceInfo:
 
     @classmethod
     def from_response(cls, data):
-        bi = data["balance_infos"][0]
+        infos = data["balance_infos"]
+        # Pick the entry with non-zero balance; prefer CNY if both have balance
+        bi = next((b for b in infos if float(b["total_balance"]) > 0), infos[0])
         return cls(
             is_available=data["is_available"],
             currency=bi["currency"],
