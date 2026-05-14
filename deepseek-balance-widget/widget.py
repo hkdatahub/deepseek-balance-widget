@@ -23,7 +23,7 @@ class BalanceWidget(QWidget):
             | Qt.Tool
         )
         self.setAttribute(Qt.WA_TranslucentBackground, False)
-        self.setFixedSize(300, 200)
+        self.setFixedSize(300, 220)
 
         self.setAutoFillBackground(True)
         pal = self.palette()
@@ -50,10 +50,6 @@ class BalanceWidget(QWidget):
         )
         close_btn.clicked.connect(self.hide)
         header.addWidget(close_btn)
-
-        self._status_label = QLabel("OK")
-        self._status_label.setStyleSheet("color: #a6e3a1; font-size: 11px;")
-        header.addWidget(self._status_label)
         layout.addLayout(header)
 
         # Balance display
@@ -106,15 +102,10 @@ class BalanceWidget(QWidget):
             f"color: {color}; font-size: 36px; font-weight: 700;"
         )
 
-        self._status_label.setText("OK")
-        self._status_label.setStyleSheet("color: #a6e3a1; font-size: 11px;")
-
         self._updated_label.setText(f"Updated {datetime.now().strftime('%H:%M:%S')}")
         self._updated_label.setStyleSheet("color: #45475a; font-size: 10px;")
 
     def show_error(self, message):
-        self._status_label.setText("ERROR")
-        self._status_label.setStyleSheet("color: #f38ba8; font-size: 11px;")
         self._balance_label.setStyleSheet("color: #585b70; font-size: 36px; font-weight: 700;")
         self._granted_label.setStyleSheet("color: #585b70; font-size: 16px; font-weight: 600;")
         self._topped_label.setStyleSheet("color: #585b70; font-size: 16px; font-weight: 600;")
